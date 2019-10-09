@@ -17,37 +17,69 @@ heroku-cli-plugin-apps
 <!-- usage -->
 ```sh-session
 $ npm install -g heroku-cli-plugin-apps
-$ oclif-example COMMAND
+$ heroku COMMAND
 running command...
-$ oclif-example (-v|--version|version)
+$ heroku (-v|--version|version)
 heroku-cli-plugin-apps/0.0.0 darwin-x64 node-v10.16.0
-$ oclif-example --help [COMMAND]
+$ heroku --help [COMMAND]
 USAGE
-  $ oclif-example COMMAND
+  $ heroku COMMAND
 ...
 ```
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`oclif-example hello [FILE]`](#oclif-example-hello-file)
+* [`heroku domains`](#heroku-domains)
+* [`heroku domains:info [HOSTNAME]`](#heroku-domainsinfo-hostname)
 
-## `oclif-example hello [FILE]`
+## `heroku domains`
 
-describe the command here
+list domains for an app
 
 ```
 USAGE
-  $ oclif-example hello [FILE]
+  $ heroku domains
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -a, --app=app      (required) app to run command against
+  -h, --help         show CLI help
+  -x, --extended     show extra columns
+  --columns=columns  only show provided columns (comma-separated)
+  --csv              output is csv format
+  --filter=filter    filter property by partial string matching, ex: name=foo
+  --no-header        hide table header from output
+  --no-truncate      do not truncate output to fit screen
+  --sort=sort        property to sort by (prepend '-' for descending)
 
-EXAMPLE
-  $ oclif-example hello
-  hello world from ./src/hello.ts!
+EXAMPLES
+  $ heroku domains
+  === example Heroku Domain
+  example.herokuapp.com
+
+  === example Custom Domains
+  Domain Name      DNS Record Type  DNS Target
+  www.example.com  CNAME            www.example.herokudns.com
+
+  $ heroku domains --filter 'Domain Name=www.example.com'
 ```
 
-_See code: [src/commands/hello.ts](https://github.com/brettgoulder/heroku-cli-plugin-apps/blob/v0.0.0/src/commands/hello.ts)_
+_See code: [src/commands/domains/index.ts](https://github.com/brettgoulder/heroku-cli-plugin-apps/blob/v0.0.0/src/commands/domains/index.ts)_
+
+## `heroku domains:info [HOSTNAME]`
+
+show detailed information for a domain on an app
+
+```
+USAGE
+  $ heroku domains:info [HOSTNAME]
+
+OPTIONS
+  -a, --app=app  (required) app to run command against
+  -h, --help     show CLI help
+
+EXAMPLE
+  $ heroku domains:info www.example.com
+```
+
+_See code: [src/commands/domains/info.ts](https://github.com/brettgoulder/heroku-cli-plugin-apps/blob/v0.0.0/src/commands/domains/info.ts)_
 <!-- commandsstop -->
