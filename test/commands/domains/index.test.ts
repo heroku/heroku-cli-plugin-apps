@@ -47,7 +47,6 @@ describe('domains', () => {
     status: 'pending'
   }]
 
-
   test
     .nock('https://api.heroku.com', api => api
       .get('/apps/myapp/domains')
