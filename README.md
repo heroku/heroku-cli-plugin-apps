@@ -30,7 +30,11 @@ USAGE
 # Commands
 <!-- commands -->
 * [`heroku domains`](#heroku-domains)
+* [`heroku domains:add [HOSTNAME]`](#heroku-domainsadd-hostname)
+* [`heroku domains:clear`](#heroku-domainsclear)
 * [`heroku domains:info [HOSTNAME]`](#heroku-domainsinfo-hostname)
+* [`heroku domains:remove [HOSTNAME]`](#heroku-domainsremove-hostname)
+* [`heroku domains:wait [HOSTNAME]`](#heroku-domainswait-hostname)
 
 ## `heroku domains`
 
@@ -65,6 +69,44 @@ EXAMPLES
 
 _See code: [src/commands/domains/index.ts](https://github.com/brettgoulder/heroku-cli-plugin-apps/blob/v0.0.0/src/commands/domains/index.ts)_
 
+## `heroku domains:add [HOSTNAME]`
+
+add a domain to an app
+
+```
+USAGE
+  $ heroku domains:add [HOSTNAME]
+
+OPTIONS
+  -a, --app=app    (required) app to run command against
+  -h, --help       show CLI help
+  -j, --json=json  output in json format
+  --wait
+
+EXAMPLE
+  heroku domains:add www.example.com
+```
+
+_See code: [src/commands/domains/add.ts](https://github.com/brettgoulder/heroku-cli-plugin-apps/blob/v0.0.0/src/commands/domains/add.ts)_
+
+## `heroku domains:clear`
+
+remove all domains from an app
+
+```
+USAGE
+  $ heroku domains:clear
+
+OPTIONS
+  -a, --app=app  (required) app to run command against
+  -h, --help     show CLI help
+
+EXAMPLE
+  heroku domains:clear
+```
+
+_See code: [src/commands/domains/clear.ts](https://github.com/brettgoulder/heroku-cli-plugin-apps/blob/v0.0.0/src/commands/domains/clear.ts)_
+
 ## `heroku domains:info [HOSTNAME]`
 
 show detailed information for a domain on an app
@@ -82,4 +124,37 @@ EXAMPLE
 ```
 
 _See code: [src/commands/domains/info.ts](https://github.com/brettgoulder/heroku-cli-plugin-apps/blob/v0.0.0/src/commands/domains/info.ts)_
+
+## `heroku domains:remove [HOSTNAME]`
+
+remove a domain from an app
+
+```
+USAGE
+  $ heroku domains:remove [HOSTNAME]
+
+OPTIONS
+  -a, --app=app  (required) app to run command against
+  -h, --help     show CLI help
+
+EXAMPLE
+  heroku domains:remove www.example.com
+```
+
+_See code: [src/commands/domains/remove.ts](https://github.com/brettgoulder/heroku-cli-plugin-apps/blob/v0.0.0/src/commands/domains/remove.ts)_
+
+## `heroku domains:wait [HOSTNAME]`
+
+wait for domain to be active for an app
+
+```
+USAGE
+  $ heroku domains:wait [HOSTNAME]
+
+OPTIONS
+  -a, --app=app  (required) app to run command against
+  -h, --help     show CLI help
+```
+
+_See code: [src/commands/domains/wait.ts](https://github.com/brettgoulder/heroku-cli-plugin-apps/blob/v0.0.0/src/commands/domains/wait.ts)_
 <!-- commandsstop -->

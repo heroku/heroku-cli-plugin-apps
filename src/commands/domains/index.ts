@@ -18,13 +18,12 @@ www.example.com  CNAME            www.example.herokudns.com
   static flags = {
     help: flags.help({char: 'h'}),
     app: flags.app({required: true}),
-    ...cli.table.flags()
+    ...cli.table.flags({except: 'no-truncate'})
   }
 
   async run() {
     const {flags} = this.parse(DomainsIndex)
-    const response = await this.heroku.get<Array<Heroku.Domain>>(`/apps/${flags.app}/domains`)
-    const domains = response.body
+    const {body: domains} = await this.heroku.get<Array<Heroku.Domain>>(`/apps/${flags.app}/domains`)
     const herokuDomain = domains.find(domain => domain.kind === 'heroku')
     const customDomains = domains.filter(domain => domain.kind === 'custom')
 
@@ -40,7 +39,8 @@ www.example.com  CNAME            www.example.herokudns.com
         acm_status: {header: 'ACM Status', extended: true},
         acm_status_reason: {header: 'ACM Status', extended: true}
       }, {
-        ...flags
+        ...flags,
+        'no-truncate': true
       })
     }
   }

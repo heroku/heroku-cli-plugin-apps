@@ -2,7 +2,6 @@ import {color} from '@heroku-cli/color'
 import {Command, flags} from '@heroku-cli/command'
 import * as Heroku from '@heroku-cli/schema'
 import cli from 'cli-ux'
-import shellescape from 'shell-escape'
 
 export default class DomainsClear extends Command {
   static description = 'remove all domains from an app'

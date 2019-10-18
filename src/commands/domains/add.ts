@@ -2,18 +2,20 @@ import {color} from '@heroku-cli/color'
 import {Command, flags} from '@heroku-cli/command'
 import * as Heroku from '@heroku-cli/schema'
 import cli from 'cli-ux'
-import shellescape from 'shell-escape'
+import * as shellescape from 'shell-escape'
+
+import waitForDomain from '../../lib/wait-for-domain'
 
 export default class DomainsAdd extends Command {
-  static description = 'remove a domain from an app'
+  static description = 'add a domain to an app'
 
-  static examples = ['heroku domains:remove www.example.com']
+  static examples = ['heroku domains:add www.example.com']
 
   static flags = {
     help: flags.help({char: 'h'}),
     app: flags.app({required: true}),
     json: flags.string({description: 'output in json format', char: 'j'}),
-    wait: flags.string()
+    wait: flags.boolean()
   }
 
   static args = [{name: 'hostname'}]
@@ -22,20 +24,23 @@ export default class DomainsAdd extends Command {
     const {args, flags} = this.parse(DomainsAdd)
     const {hostname} = args
     cli.action.start(`Adding ${color.green(args.hostname)} to ${color.app(flags.app)}`)
-    const {body: domain} = await this.heroku.get<Heroku.Domain>(`/apps/${flags.app}/domains/${hostname}`)
+    const {body: domain} = await this.heroku.post<Heroku.Domain>(`/apps/${flags.app}/domains`, {
+      body: {hostname}
+    })
+    cli.action.stop()
     if (flags.json) {
       cli.styledJSON(domain)
     } else {
-      cli.warn(`Configure your app's DNS provider to point to the DNS Target ${color.green(domain.cname)}.
-      For help, see https://devcenter.heroku.com/articles/custom-domains`)
+      cli.log(`Configure your app's DNS provider to point to the DNS Target ${color.green(domain.cname || '')}.
+For help, see https://devcenter.heroku.com/articles/custom-domains`)
       if (domain.status !== 'none') {
-        cli.error('')
         if (flags.wait) {
-          // yield waitForDomain(context, heroku, domain)
+          await waitForDomain(flags.app, this.heroku, domain)
         } else {
-          cli.error(`The domain ${color.green(hostname)} has been enqueued for addition`)
+          cli.log('')
+          cli.log(`The domain ${color.green(hostname)} has been enqueued for addition`)
           let command = `heroku domains:wait ${shellescape([hostname])}`
-          cli.warn(`Run ${color.cmd(command)} to wait for completion`)
+          cli.log(`Run ${color.cmd(command)} to wait for completion`)
         }
       }
     }
