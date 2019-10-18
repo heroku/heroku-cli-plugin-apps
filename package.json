@@ -2,13 +2,20 @@
   "name": "heroku-cli-plugin-apps",
   "version": "0.0.0",
   "author": "Brett @brettgoulder",
-  "bugs": "https://github.com/brettgoulder/heroku-cli-plugin-apps/issues",
+  "bugs": "https://github.com/heroku/heroku-cli-plugin-apps/issues",
   "dependencies": {
+    "@heroku-cli/color": "^1.1.14",
+    "@heroku-cli/command": "^8.2.14",
+    "@heroku-cli/schema": "^1.0.25",
     "@oclif/command": "^1",
     "@oclif/config": "^1",
-    "tslib": "^1"
+    "cli-ux": "^5.3.2",
+    "shell-escape": "^0.2.0",
+    "tslib": "^1",
+    "urijs": "^1.19.1"
   },
   "devDependencies": {
+    "@fancy-test/nock": "^0.1.1",
     "@oclif/dev-cli": "^1",
     "@oclif/plugin-help": "^2",
     "@oclif/test": "^1",
@@ -16,6 +23,8 @@
     "@types/chai": "^4",
     "@types/mocha": "^5",
     "@types/node": "^10",
+    "@types/shell-escape": "^0.2.0",
+    "@types/urijs": "^1.19.4",
     "chai": "^4",
     "globby": "^10",
     "mocha": "^5",
@@ -33,19 +42,19 @@
     "/oclif.manifest.json",
     "/yarn.lock"
   ],
-  "homepage": "https://github.com/brettgoulder/heroku-cli-plugin-apps",
+  "homepage": "https://github.com/heroku/heroku-cli-plugin-apps",
   "keywords": [
-    "oclif-plugin"
+    "heroku-plugin"
   ],
   "license": "MIT",
   "oclif": {
     "commands": "./lib/commands",
-    "bin": "oclif-example",
+    "bin": "heroku",
     "devPlugins": [
       "@oclif/plugin-help"
     ]
   },
-  "repository": "brettgoulder/heroku-cli-plugin-apps",
+  "repository": "heroku/heroku-cli-plugin-apps",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "tslint -p test -t stylish",
