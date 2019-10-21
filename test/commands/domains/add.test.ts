@@ -25,6 +25,6 @@ describe('domains:add', () => {
     )
     .command(['domains:add', 'example.com', '--app', 'myapp'])
     .it('adds the domain to the app', ctx => {
-      expect(ctx.stderr).to.contain('Adding example.com to ⬢ myapp... done')
+      expect(ctx.stderr).to.contain('Adding example.com to myapp... done')
     })
 })
